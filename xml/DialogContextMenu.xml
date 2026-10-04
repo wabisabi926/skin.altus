@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol>996</defaultcontrol>
-	<include content="OpenClose_Slide_Left">
-		<param name="distance" value="498" />
-	</include>
+	<include>OpenClose_ContextMenu</include>
 	<onload condition="!String.IsEmpty(Window(Home).Property(CurrentDBType)) + !String.IsEqual(Window(Home).Property(CurrentDBType),season) + !String.IsEqual(Window(Home).Property(CurrentDBType),episode)">SetFocus(8001)</onload>
 	<coordinates>
 		<origin x="0" y="0"/>
 	</coordinates>
 	<controls>
 		<control type="group">
-			<width>498</width>
 			<top>0</top>
 			<bottom>0</bottom>
-			<left>0</left>
 			<animation effect="slide" start="100" end="-600,0" time="0" condition="String.IsEqual(Window(Home).Property(altus.pvr.hiding_ctx),true)">Conditional</animation>
-			<include content="DialogBackgroundCommons">
-				<param name="header_label" value="$VAR[ContextMenuTitleVar]" />
-				<param name="header_id" value="1" />
-				<param name="width" value="498" />
-				<param name="top" value="40" />
-				<param name="bottom" value="40" />
-				<param name="left" value="-42" />
-				<param name="border_texture" value="masks/bordertexture-46-thin_right.png" />
-				<param name="diffuse_texture" value="masks/radius_46_right.png" />
-				<param name="border_value" value="0,46,46,46" />
-			</include>
+			<control type="group">
+				<width>498</width>
+				<top>0</top>
+				<bottom>0</bottom>
+				<include content="DialogBackgroundCommons">
+					<param name="header_label" value="$VAR[ContextMenuTitleVar]" />
+					<param name="header_label_color" value="$VAR[FocusColorTheme]" />
+					<param name="header_id" value="1" />
+					<param name="width" value="498" />
+					<param name="top" value="40" />
+					<param name="bottom" value="40" />
+					<param name="left" value="-42" />
+					<param name="content_visible" value="!$EXP[isCtxPoster]" />
+					<param name="blur_mask" value="masks/buttonmenu.png" />
+				</include>
+			</control>
+			<control type="group">
+				<width>1058</width>
+				<top>0</top>
+				<bottom>0</bottom>
+				<centerleft>50%</centerleft>
+				<include content="DialogBackgroundCommons">
+					<param name="header_label" value="$VAR[ContextMenuTitleVar]" />
+					<param name="header_label_color" value="$VAR[FocusColorTheme]" />
+					<param name="header_id" value="2" />
+					<param name="width" value="1058" />
+					<param name="top" value="40" />
+					<param name="bottom" value="40" />
+					<param name="darken_bg" value="false" />
+					<param name="content_visible" value="$EXP[isCtxPoster]" />
+					<param name="blur_mask" value="masks/contextmenu.png" />
+				</include>
+			</control>
 			<control type="button">
 				<left>-1920</left>
 				<top>-1080</top>
@@ -35,51 +53,71 @@
 				<texturenofocus />
 				<onclick>Action(close)</onclick>
 			</control>
-			<!-- <control type="image" id="999">
-				<description>background image</description>
-				<left>0</left>
-				<top>0</top>
-				<width>498</width>
-				<height>780</height>
-				<texture colordiffuse="$VAR[FocusColorTheme]">colors/commons.png</texture>
-			</control> -->
+			<control type="group">
+			<width>498</width>
+			<top>0</top>
+			<bottom>0</bottom>
+			<animation effect="slide" start="0" end="991,0" time="0" condition="$EXP[isCtxPoster]">Conditional</animation>
+			<control type="image">
+				<left>-520</left>
+				<width>520</width>
+				<top>170</top>
+				<height>825</height>
+				<aspectratio>stretch</aspectratio>
+				<texture colordiffuse="artwork_dim" diffuse="masks/poster-videoinfo.png">$INFO[Window(Home).Property(altus.ctx.poster)]</texture>
+				<!-- <bordersize>2</bordersize>
+				<bordertexture border="46" colordiffuse="$VAR[FocusColorTheme]" infill="false">masks/bordertexture-46.png</bordertexture> -->
+				<visible>$EXP[isCtxPoster]</visible>
+			</control>
 			<control type="grouplist" id="996">
 				<description>grouplist for context buttons</description>
 				<left>40</left>
 				<top>170</top>
 				<height>825</height>
+				<itemgap>29</itemgap>
+				<scrolltime tween="cubic" easing="out">500</scrolltime>
 				<onright>Action(close)</onright>
 				<usecontrolcoords>true</usecontrolcoords>
 				<control type="button" id="8001">
-					<height>75</height>
+					<height>93</height>
 					<align>left</align>
 					<width>418</width>
 					<aligny>center</aligny>
 					<textoffsetx>35</textoffsetx>
 					<label>[I][B]Play Trailer (Altus)[/B][/I]</label>
-					<font>font32</font>
+					<font>font32_bold</font>
 					<textcolor>unfocused_text</textcolor>
-					<focusedcolor>$VAR[FocusedTextColorVar]</focusedcolor>
-					<texturefocus border="23" colordiffuse="$VAR[FocusColorTheme]">masks/radius_23.png</texturefocus>
-					<texturenofocus />
+					<focusedcolor>$VAR[FocusColorTheme]</focusedcolor>
+					<texturefocus border="46" colordiffuse="$VAR[FocusColorTheme]">masks/pill46_focus.png</texturefocus>
+					<texturenofocus border="46" colordiffuse="4D000000">masks/radius_46.png</texturenofocus>
 					<onclick>RunScript(script.altus.helper, mode=play_trailer)</onclick>
 					<visible>!String.IsEmpty(Window(Home).Property(CurrentDBType)) + !String.IsEqual(Window(Home).Property(CurrentDBType),season) + !String.IsEqual(Window(Home).Property(CurrentDBType),episode)</visible>
 				</control>
 			</control>
+			<!-- <control type="group">
+				<left>40</left>
+				<include content="MenuScrollIndicators">
+					<param name="list_id" value="996"/>
+					<param name="width" value="418"/>
+					<param name="top" value="168"/>
+					<param name="bottom" value="894"/>
+				</include>
+			</control> -->
 			<control type="button" id="1000">
 				<description>button template</description>
 				<left>0</left>
 				<top></top>
 				<width>418</width>
-				<height>75</height>
+				<height>93</height>
 				<align>left</align>
 				<aligny>center</aligny>
 				<textoffsetx>35</textoffsetx>
-				<font>font32</font>
+				<font>font32_bold</font>
 				<textcolor>unfocused_text</textcolor>
-				<focusedcolor>$VAR[FocusedTextColorVar]</focusedcolor>
-				<texturefocus border="23" colordiffuse="$VAR[FocusColorTheme]">masks/radius_23.png</texturefocus>
-				<texturenofocus />
+				<focusedcolor>$VAR[FocusColorTheme]</focusedcolor>
+				<texturefocus border="46" colordiffuse="$VAR[FocusColorTheme]">masks/pill46_focus.png</texturefocus>
+				<texturenofocus border="46" colordiffuse="4D000000">masks/radius_46.png</texturenofocus>
+			</control>
 			</control>
 		</control>
 	</controls>

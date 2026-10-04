@@ -3,8 +3,8 @@
 	<include name="View_52_IconWall">
 		<control type="group">
 			<visible>Control.IsVisible(52)</visible>
-			<include>OpenClose_Right</include>
-			<include>Visible_Right</include>
+			<include>OpenClose_FadeZoom</include>
+			<include>Vis_FadeZoom</include>
 			<control type="panel" id="52">
 				<centerleft>50%</centerleft>
 				<top>120</top>
@@ -47,13 +47,16 @@
 				<viewtype label="31099">icon</viewtype>
 				<itemlayout height="290" width="440" condition="Container.Content() | Container.Content(files) | Container.Content(tags) | Container.Content(playlists) | [Container.Content(studios) + System.AddonIsEnabled(resource.images.studios.white)]">
 					<control type="group">
+						<include content="ViewUnfocusedAnimations">
+							<param name="id" value="52"/>
+						</include>
 						<top>0</top>
 						<control type="image">
 							<left>40</left>
 							<top>40</top>
 							<width>360</width>
 							<height>210</height>
-							<texture border="23" colordiffuse="66000000">masks/radius_23.png</texture>
+							<texture border="33" colordiffuse="4D000000">masks/radius_33.png</texture>
 						</control>
 						<!-- IMAGE CONTROL -->
 						<control type="image">
@@ -69,7 +72,7 @@
 							<top>185</top>
 							<width>285</width>
 							<height>40</height>
-							<font>font23</font>
+							<font>font23_title</font>
 							<label>$INFO[ListItem.Label]</label>
 							<textcolor>unfocused_text</textcolor>
 							<align>center</align>
@@ -81,32 +84,56 @@
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<include>VideoTrailerControl</include>
+						<include content="ViewFocusAnimations">
+							<param name="id" value="52"/>
+							<param name="list_id" value="52"/>
+						</include>
 						<top>0</top>
 						<control type="image">
 							<left>40</left>
 							<top>40</top>
 							<width>360</width>
 							<height>210</height>
-							<texture border="23" colordiffuse="$VAR[FocusColorTheme]">masks/radius_23.png</texture>
-							<include>Animation_FocusTextureFade</include>
+							<texture border="33" colordiffuse="4D000000">masks/radius_33.png</texture>
+							<visible>!Integer.IsEqual(ListItem.CurrentItem,Container(52).CurrentItem)</visible>
+						</control>
+						<control type="image">
+							<left>40</left>
+							<top>40</top>
+							<width>360</width>
+							<height>210</height>
+							<texture border="33" colordiffuse="A6000000">masks/radius_33.png</texture>
+							<visible>Integer.IsEqual(ListItem.CurrentItem,Container(52).CurrentItem)</visible>
 						</control>
 						<control type="image">
 							<left>160</left>
 							<top>60</top>
 							<width>120</width>
 							<height>120</height>
-							<texture colordiffuse="$VAR[IconDiffuse]" fallback="DefaultStudios.png">$INFO[ListItem.Icon]</texture>
+							<texture fallback="DefaultStudios.png">$INFO[ListItem.Icon]</texture>
 							<aspectratio>keep</aspectratio>
 							<align>center</align>
+						</control>
+						<control type="group">
+							<left>40</left>
+							<top>40</top>
+							<width>360</width>
+							<height>210</height>
+							<include content="FocusBorder">
+								<param name="list_id" value="52"/>
+								<param name="focused" value="true"/>
+								<param name="radius" value="33"/>
+								<param name="border" value="33"/>
+							</include>
 						</control>
 						<control type="label">
 							<left>77</left>
 							<top>185</top>
 							<width>285</width>
 							<height>40</height>
-							<font>font23</font>
+							<font>font23_title</font>
 							<label>$INFO[ListItem.Label]</label>
-							<textcolor>$VAR[FocusedTextColorVar]</textcolor>
+							<textcolor>unfocused_text</textcolor>
 							<align>center</align>
 							<aligny>center</aligny>
 							<scroll>true</scroll>
@@ -117,13 +144,14 @@
 				</focusedlayout>
 				<itemlayout height="181" width="348" condition="Container.Content(genres) | Container.Content(sources) | Container.Content(years) | Container.Content(roles) | Container.Content(countries) | [Container.Content(studios) + !System.AddonIsEnabled(resource.images.studios.white)]">
 					<control type="group">
+						<include content="ViewUnfocusedAnimations">
+							<param name="id" value="52"/>
+						</include>
 						<top>120</top>
 						<control type="image">
 							<width>330</width>
 							<height>140</height>
-							<texture>dialogs/dialog-bg-nobo.png</texture>
-							<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
-							<bordersize>20</bordersize>
+							<texture border="33" colordiffuse="4D000000">masks/radius_33.png</texture>
 						</control>
 						<control type="textbox">
 							<left>30</left>
@@ -139,20 +167,32 @@
 				<focusedlayout height="181" width="348" condition="Container.Content(genres) | Container.Content(sources) | Container.Content(years) | Container.Content(roles) | Container.Content(countries) | [Container.Content(studios) + !System.AddonIsEnabled(resource.images.studios.white)]">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
+						<include content="ViewFocusAnimations">
+							<param name="id" value="52"/>
+							<param name="list_id" value="52"/>
+						</include>
 						<top>120</top>
 						<control type="image">
 							<width>330</width>
 							<height>140</height>
-							<texture>dialogs/dialog-bg-nobo.png</texture>
-							<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
-							<bordersize>20</bordersize>
+							<texture border="33" colordiffuse="4D000000">masks/radius_33.png</texture>
+							<visible>!Integer.IsEqual(ListItem.CurrentItem,Container(52).CurrentItem)</visible>
 						</control>
 						<control type="image">
 							<width>330</width>
 							<height>140</height>
-							<texture colordiffuse="button_focus2">colors/grey.png</texture>
-							<bordersize>20</bordersize>
-							<include>Animation_FocusTextureFade</include>
+							<texture border="33" colordiffuse="A6000000">masks/radius_33.png</texture>
+							<visible>Integer.IsEqual(ListItem.CurrentItem,Container(52).CurrentItem)</visible>
+						</control>
+						<control type="group">
+							<width>330</width>
+							<height>140</height>
+							<include content="FocusBorder">
+								<param name="list_id" value="52"/>
+								<param name="focused" value="true"/>
+								<param name="radius" value="33"/>
+								<param name="border" value="33"/>
+							</include>
 						</control>
 						<control type="textbox">
 							<left>30</left>
@@ -166,6 +206,12 @@
 					</control>
 				</focusedlayout>
 			</control>
+			<include content="TopBottomBars">
+				<param name="top_visible" value="false"/>
+				<param name="bottom_visible" value="true"/>
+				<param name="top" value="-70"/>
+				<param name="bottom" value="0"/>
+			</include>
 		</control>
 	</include>
 </includes>

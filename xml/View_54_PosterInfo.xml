@@ -59,7 +59,7 @@
 				<control type="group">
 					<control type="image">
 					<bordersize>border_size</bordersize>
-					<texture colordiffuse="66000000">colors/white.png</texture>
+					<texture colordiffuse="4D000000">colors/white.png</texture>
 					<bordertexture border="border_size" colordiffuse="$VAR[FocusColorTheme]" infill="false">masks/bordertexture2.png</bordertexture>
 				</control>
 				</control>
@@ -79,7 +79,7 @@
 				</control>
 				<control type="image">
 					<texture border="focus_border_size" colordiffuse="$VAR[FocusColorTheme]" infill="false">colors/white.png</texture>
-					<visible>[$PARAM[focused] + Control.HasFocus($PARAM[list_id])] | [$PARAM[focused] + ControlGroup(400).HasFocus]</visible>
+					<visible>$PARAM[focused] + Control.HasFocus($PARAM[list_id])</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
 				<control type="label">
@@ -143,9 +143,15 @@
 				<control type="group">
 					<depth>DepthContentPopout</depth>
 					<top>0</top>
-					<include content="PosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="54"/>
+							<param name="list_id" value="54"/>
+						</include>
+						<include content="PosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -169,9 +175,15 @@
 				<control type="group">
 					<depth>DepthContentPopout</depth>
 					<top>0</top>
-					<include content="PosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="54"/>
+							<param name="list_id" value="54"/>
+						</include>
+						<include content="PosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -195,9 +207,15 @@
 				<control type="group">
 					<depth>DepthContentPopout</depth>
 					<top>0</top>
-					<include content="SmallPosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="54"/>
+							<param name="list_id" value="54"/>
+						</include>
+						<include content="SmallPosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -221,9 +239,15 @@
 				<control type="group">
 					<depth>DepthContentPopout</depth>
 					<top>0</top>
-					<include content="SmallPosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="54"/>
+							<param name="list_id" value="54"/>
+						</include>
+						<include content="SmallPosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -233,14 +257,15 @@
 
 	<include name="View_54_PosterInfo">
 		<control type="group">
-			<include>OpenClose_Right</include>
-			<include>Visible_Right</include>
+			<include>OpenClose_FadeZoom</include>
+			<include>Vis_FadeZoom</include>
 			<left>0</left>
 			<top>70</top>
 			<visible>Control.IsVisible(54)</visible>
 			<control type="panel" id="54">
 				<left>496</left>
 				<right>0</right>
+				<top>16</top>
 				<height>100%</height>
 				<onleft>9000</onleft>
 				<onright>532</onright>
@@ -329,7 +354,7 @@
 				<right>video_header_right</right>
 				<top>-45</top>
 				<label>$VAR[LeftVideoHeader]</label>
-				<font>font30_title_uppercase</font>
+				<font>font36_title</font>
 				<textcolor>$VAR[FocusColorTheme]</textcolor>
 				<shadowcolor>text_shadow</shadowcolor>
 				<align>left</align>
@@ -342,7 +367,7 @@
 				<top>-45</top>
 				<width>1815</width>
 				<label>$VAR[RightVideoHeader]</label>
-				<font>font30_title_uppercase</font>
+				<font>font36_title</font>
 				<textcolor>$VAR[FocusColorTheme]</textcolor>
 				<shadowcolor>text_shadow</shadowcolor>
 				<align>right</align>

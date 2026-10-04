@@ -28,47 +28,25 @@
 		<control type="group">
 			<centerleft>50%</centerleft>
 			<centertop>50%</centertop>
-			<width>1085</width>
-			<height>730</height>
+			<width>1450</width>
+			<height>885</height>
 
 			<include content="DialogBackgroundCommons">
 				<param name="header_label" value="Choose icon" />
 				<param name="header_id" value="1" />
-				<param name="width" value="1085" />
-				<param name="height" value="730" />
+				<param name="width" value="1450" />
+				<param name="height" value="885" />
 				<param name="header_top" value="15" />
 				<param name="divider_top" value="90" />
+				<param name="blur_mask" value="masks/dialogaddonsettings.png" />
 			</include>
-
-			<!-- Background -->
-			<!-- <control type="image">
-				<left>0</left>
-				<top>0</top>
-				<right>0</right>
-				<bottom>0</bottom>
-				<texture colordiffuse="$VAR[DialogBackgroundDiffuse]">$VAR[DialogBackgroundTexture]</texture>
-				<aspectratio>scale</aspectratio>
-			</control> -->
-
-			<!-- Header label -->
-			<!-- <control type="label" id="1">
-				<left>30</left>
-				<right>30</right>
-				<top>17</top>
-				<height>50</height>
-				<label>Choose icon</label>
-				<align>left</align>
-				<aligny>center</aligny>
-				<font>font36_title</font>
-				<textcolor>unfocused_text</textcolor>
-			</control> -->
 
 			<!-- Folder list (left side) -->
 			<control type="list" id="3001">
 				<left>40</left>
 				<top>130</top>
-				<width>270</width>
-				<height>560</height>
+				<width>320</width>
+				<height>684</height>
 				<onup>3001</onup>
 				<ondown>3001</ondown>
 				<onleft>3001</onleft>
@@ -76,30 +54,48 @@
 				<pagecontrol>33</pagecontrol>
 				<onfocus>RunScript(script.altus.helper,mode=icon_folder_debounce)</onfocus>
 				<scrolltime tween="cubic" easing="out">300</scrolltime>
-				<itemlayout width="270" height="70">
+				<itemlayout width="320" height="114">
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<height>85</height>
+						<texture border="33" colordiffuse="4D000000">masks/radius_33.png</texture>
+					</control>
 					<control type="label">
-						<left>25</left>
-						<right>10</right>
-						<font>font32</font>
+						<left>38</left>
+						<top>0</top>
+						<right>20</right>
+						<height>85</height>
+						<font>font32_bold</font>
 						<textcolor>unfocused_text</textcolor>
 						<label>$INFO[ListItem.Label]</label>
 						<aligny>center</aligny>
 					</control>
 				</itemlayout>
-				<focusedlayout width="270" height="70">
+				<focusedlayout width="320" height="114">
 					<control type="image">
 						<left>0</left>
 						<top>0</top>
 						<right>0</right>
-						<bottom>0</bottom>
-						<texture border="23" colordiffuse="$VAR[FocusColorTheme]">masks/radius_23.png</texture>
-						<animation effect="fade" start="100" end="50" time="40" condition="!Control.HasFocus(3001)">Conditional</animation>
+						<height>85</height>
+						<texture border="33" colordiffuse="A6000000">masks/radius_33.png</texture>
+					</control>
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<height>85</height>
+						<texture border="33" colordiffuse="$VAR[FocusColorTheme]" infill="false">masks/bordertexture-33_alt.png</texture>
+						<visible>Control.HasFocus(3001)</visible>
 					</control>
 					<control type="label">
-						<left>25</left>
-						<right>10</right>
-						<font>font32</font>
-						<textcolor>$VAR[FocusedTextColorVar]</textcolor>
+						<left>38</left>
+						<top>0</top>
+						<right>20</right>
+						<height>85</height>
+						<font>font32_bold</font>
+						<textcolor>$VAR[FocusColorTheme]</textcolor>
 						<label>$INFO[ListItem.Label]</label>
 						<aligny>center</aligny>
 					</control>
@@ -108,18 +104,18 @@
 
 			<!-- Separator -->
 			<control type="image">
-				<height>560</height>
-				<left>350</left>
+				<height>655</height>
+				<left>390</left>
 				<top>130</top>
 				<width>1</width>
-				<texture colordiffuse="$VAR[FocusColorTheme]">colors/dark.png</texture>
+				<texture colordiffuse="$VAR[FocusColorTheme]">colors/greyer.png</texture>
 			</control>
 
 			<control type="scrollbar" id="33">
-				<height>560</height>
-				<left>350</left>
+				<height>655</height>
+				<left>389</left>
 				<top>130</top>
-				<width>1</width>
+				<width>3</width>
 				<orientation>vertical</orientation>
 				<texturesliderbackground/>
 				<texturesliderbar colordiffuse="$VAR[FocusColorTheme]">colors/white.png</texturesliderbar>
@@ -129,10 +125,10 @@
 
 			<!-- Icon grid panel -->
 			<control type="panel" id="3000">
-				<left>390</left>
+				<left>420</left>
 				<top>130</top>
-				<width>740</width>
-				<bottom>45</bottom>
+				<width>990</width>
+				<height>660</height>
 				<onup>3000</onup>
 				<ondown>3000</ondown>
 				<onleft>3001</onleft>
@@ -145,10 +141,17 @@
 						<width>100</width>
 						<height>100</height>
 						<control type="image">
-							<left>25</left>
-							<top>25</top>
-							<width>50</width>
-							<height>50</height>
+							<left>0</left>
+							<top>0</top>
+							<width>100</width>
+							<height>100</height>
+							<texture border="33" colordiffuse="4D000000">masks/radius_33.png</texture>
+						</control>
+						<control type="image">
+							<left>18</left>
+							<top>18</top>
+							<width>64</width>
+							<height>64</height>
 							<texture diffuse="masks/mainmenu-img.png" colordiffuse="unfocused_text">$INFO[ListItem.Icon]</texture>
 							<aspectratio>keep</aspectratio>
 						</control>
@@ -165,15 +168,22 @@
 							<top>0</top>
 							<width>100</width>
 							<height>100</height>
-							<texture colordiffuse="$VAR[FocusColorTheme]">masks/mainmenu-img.png</texture>
-							<aspectratio>stretch</aspectratio>
+							<texture border="33" colordiffuse="A6000000">masks/radius_33.png</texture>
 						</control>
 						<control type="image">
-							<left>25</left>
-							<top>25</top>
-							<width>50</width>
-							<height>50</height>
-							<texture diffuse="masks/mainmenu-img.png" colordiffuse="$VAR[FocusedTextColorVar]">$INFO[ListItem.Icon]</texture>
+							<left>0</left>
+							<top>0</top>
+							<width>100</width>
+							<height>100</height>
+							<texture border="33" colordiffuse="$VAR[FocusColorTheme]" infill="false">masks/bordertexture-33_alt.png</texture>
+							<visible>Control.HasFocus(3000)</visible>
+						</control>
+						<control type="image">
+							<left>18</left>
+							<top>18</top>
+							<width>64</width>
+							<height>64</height>
+							<texture diffuse="masks/mainmenu-img.png" colordiffuse="$VAR[FocusColorTheme]">$INFO[ListItem.Icon]</texture>
 							<aspectratio>keep</aspectratio>
 						</control>
 					</control>
@@ -182,13 +192,14 @@
 
 			<!-- Selected icon name -->
 			<control type="label">
-				<right>40</right>
-				<bottom>25</bottom>
-				<right>30</right>
-				<height>30</height>
-				<font>font12</font>
+				<left>425</left>
+				<right>45</right>
+				<bottom>35</bottom>
+				<height>35</height>
+				<font>font27_title</font>
 				<align>right</align>
-				<textcolor>grey</textcolor>
+				<aligny>center</aligny>
+				<textcolor>60FFFFFF</textcolor>
 				<label>$INFO[Container(3000).ListItem.Label]</label>
 			</control>
 		</control>

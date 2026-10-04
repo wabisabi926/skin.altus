@@ -36,12 +36,19 @@
 		<value>[COLOR unfocused_text]$INFO[Container(57).ListItem.Plot][/COLOR]</value>
   </variable>
 
+	<variable name="CategoryIcon">
+		<value condition="$EXP[isContent]">$VAR[ClearlogoVar]</value>
+		<value>$INFO[ListItem.Icon]</value>
+  </variable>
+	
 	<variable name="InfoBadgeSeasonTitle">
-		<value condition="Control.IsVisible(57)">$INFO[Container(5057).ListItem.Title]</value>
+		<value condition="$EXP[isSeasonView]">$INFO[Container(5057).ListItem.Title]</value>
 		<value>$INFO[Container($PARAM[list_id]).ListItem.TVShowTitle]</value>
 	</variable>
 
 	<variable name="InfoBadgeEpisodeLabelVar">
+		<value condition="String.IsEmpty(ListItem.Season) + String.StartsWith(Container.PluginCategory,Season)">$INFO[ListItem.Title]</value>
+		<value condition="String.IsEmpty(ListItem.Season)">[UPPERCASE][LIGHT]$INFO[ListItem.TVShowTitle][/UPPERCASE][/LIGHT]</value>
 		<value condition="String.StartsWith(Container.PluginCategory,Season)">$INFO[ListItem.Season]$INFO[ListItem.Episode,x,] | $INFO[ListItem.Title]</value>
 		<value>[UPPERCASE][LIGHT]$INFO[ListItem.Season]$INFO[ListItem.Episode,x,] | $INFO[ListItem.TVShowTitle][/UPPERCASE][/LIGHT]</value>
 	</variable>
@@ -50,8 +57,10 @@
 	but data must come from the focused episodes list (5057). Outside View 57, bare refs
 	(current container/item) are correct. -->
 	<variable name="InfoBadgeEpisodeLabelBigVar">
-		<value condition="Control.IsVisible(57) + String.StartsWith(Container(5057).PluginCategory,Season)">$INFO[Container(5057).ListItem.Season]$INFO[Container(5057).ListItem.Episode,x,] | $INFO[Container(5057).ListItem.Title]</value>
-		<value condition="Control.IsVisible(57)">[UPPERCASE][LIGHT]$INFO[Container(5057).ListItem.Season]$INFO[Container(5057).ListItem.Episode,x,] | $INFO[Container(5057).ListItem.Title][/UPPERCASE][/LIGHT]</value>
+		<value condition="$EXP[isSeasonView] + String.IsEmpty(Container(5057).ListItem.Season)">$INFO[Container(5057).ListItem.Title]</value>
+		<value condition="$EXP[isSeasonView]">$INFO[Container(5057).ListItem.Season]$INFO[Container(5057).ListItem.Episode,x,] | $INFO[Container(5057).ListItem.Title]</value>
+		<value condition="String.IsEmpty(ListItem.Season) + String.StartsWith(Container.PluginCategory,Season)">$INFO[ListItem.Title]</value>
+		<value condition="String.IsEmpty(ListItem.Season)">[UPPERCASE][LIGHT]$INFO[ListItem.TVShowTitle][/UPPERCASE][/LIGHT]</value>
 		<value condition="String.StartsWith(Container.PluginCategory,Season)">$INFO[ListItem.Season]$INFO[ListItem.Episode,x,] | $INFO[ListItem.Title]</value>
 		<value>[UPPERCASE][LIGHT]$INFO[ListItem.Season]$INFO[ListItem.Episode,x,] | $INFO[ListItem.TVShowTitle][/UPPERCASE][/LIGHT]</value>
 	</variable>
@@ -271,40 +280,33 @@
 		<value>Skin.SetString(EpisodeTypeSetting,0)</value>
 	</variable>
 
-	<variable name="FontSizeSettingVar">
-		<value condition="String.IsEqual(Skin.String(FontSizeSetting),0)">Default</value>
-		<value condition="String.IsEqual(Skin.String(FontSizeSetting),1)">Large</value>
-	</variable>
-
-	<variable name="FontSizeToggleVar">
-		<value condition="String.IsEqual(Skin.String(FontSizeSetting),0)">Skin.SetString(FontSizeSetting,1)</value>
-		<value>Skin.SetString(FontSizeSetting,0)</value>
-	</variable>
-
 	<variable name="EpisodeLabelVar">
-		<value condition="!String.StartsWith(Container($PARAM[list_id]).PluginCategory,Season)">$INFO[Container($PARAM[list_id]).ListItem.Season]$INFO[Container($PARAM[list_id]).ListItem.Episode,x,]$INFO[Container($PARAM[list_id]).ListItem.TVShowTitle, | ,]</value>
-		<value>INFO[Container($PARAM[list_id]).ListItem.Season]$INFO[Container($PARAM[list_id]).ListItem.Episode,x,]$INFO[Container($PARAM[list_id]).ListItem.Title, | ,]</value>
+		<value condition="[String.IsEmpty(ListItem.Season) | String.IsEmpty(ListItem.Episode)] + !String.StartsWith(Container.PluginCategory,Season)">$INFO[ListItem.TVShowTitle]</value>
+		<value condition="[String.IsEmpty(ListItem.Season) | String.IsEmpty(ListItem.Episode)]">$INFO[ListItem.Title]</value>
+		<value condition="!String.StartsWith(Container.PluginCategory,Season)">$INFO[ListItem.Season]$INFO[ListItem.Episode,x,]$INFO[ListItem.TVShowTitle, | ,]</value>
+		<value>$INFO[ListItem.Season]$INFO[ListItem.Episode,x,]$INFO[ListItem.Title, | ,]</value>
 	</variable>
 
 	<variable name="VideoFlixCrumbsVar">
 		<!-- Other windows -->
-		<value condition="$EXP[isEpisode] + Control.IsVisible(501) + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre)"> | [COLOR unfocused_text]$INFO[Container($PARAM[list_id]).ListItem.Title][/COLOR]</value>
-		<value condition="$EXP[isEpisode] + ![Control.IsVisible(55) | Control.IsVisible(56) | Control.IsVisible(501)] + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre)"> | [COLOR unfocused_text]$INFO[Container($PARAM[list_id]).ListItem.TVShowTitle][/COLOR] | [COLOR unfocused_text]$INFO[Container($PARAM[list_id]).ListItem.Season]$INFO[Container($PARAM[list_id]).ListItem.Episode,x,][/COLOR] | [COLOR unfocused_text]$INFO[Container($PARAM[list_id]).ListItem.Title][/COLOR]</value>
-		<value condition="$EXP[isEpisode] + Control.IsVisible(56) + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre)"> | [COLOR unfocused_text]$INFO[Container($PARAM[list_id]).ListItem.TVShowTitle][/COLOR]</value>
+		<value condition="$EXP[isEpisode] + $EXP[isLandscapeWall] + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre)"> | [COLOR unfocused_text]$INFO[ListItem.Title][/COLOR]</value>
+		<value condition="$EXP[isEpisode] + ![$EXP[isLandscapeInfo] | $EXP[isFlixInfo] | $EXP[isLandscapeWall]] + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre) + !String.IsEmpty(ListItem.Season) + !String.IsEmpty(ListItem.Episode)"> | [COLOR unfocused_text]$INFO[ListItem.TVShowTitle][/COLOR] | [COLOR unfocused_text]$INFO[ListItem.Season]$INFO[ListItem.Episode,x,][/COLOR] | [COLOR unfocused_text]$INFO[ListItem.Title][/COLOR]</value>
+		<value condition="$EXP[isEpisode] + ![$EXP[isLandscapeInfo] | $EXP[isFlixInfo] | $EXP[isLandscapeWall]] + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre)"> | [COLOR unfocused_text]$INFO[ListItem.TVShowTitle][/COLOR] | [COLOR unfocused_text]$INFO[ListItem.Title][/COLOR]</value>
+		<value condition="$EXP[isEpisode] + $EXP[isFlixInfo] + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre)"> | [COLOR unfocused_text]$INFO[ListItem.TVShowTitle][/COLOR]</value>
 		<value condition="
 			[
-				[String.IsEqual(Container.ViewMode,$LOCALIZE[31101]) + !Skin.HasSetting(Enable.54Titles)] | 
-				[String.IsEqual(Container.ViewMode,$LOCALIZE[311012]) + !Skin.HasSetting(Enable.55Titles)] | 
-				[String.IsEqual(Container.ViewMode,$LOCALIZE[31107]) + !Skin.HasSetting(Enable.56Titles)] | 
-				[String.IsEqual(Container.ViewMode,$LOCALIZE[311022]) + !Skin.HasSetting(Enable.500Titles)] | 
-				[String.IsEqual(Container.ViewMode,$LOCALIZE[311023]) + !Skin.HasSetting(Enable.501Titles)] | 
+				[$EXP[isPosterInfo] + !Skin.HasSetting(Enable.54Titles)] |
+				[$EXP[isLandscapeInfo] + !Skin.HasSetting(Enable.55Titles)] |
+				$EXP[isFlixInfo] |
+				[$EXP[isWall] + !Skin.HasSetting(Enable.500Titles)] |
+				[$EXP[isLandscapeWall] + !Skin.HasSetting(Enable.501Titles)] |
 				!
 					[
-						String.IsEqual(Container.ViewMode,$LOCALIZE[31101]) | 
-						String.IsEqual(Container.ViewMode,$LOCALIZE[311012]) | 
-						String.IsEqual(Container.ViewMode,$LOCALIZE[31107]) | 
-						String.IsEqual(Container.ViewMode,$LOCALIZE[311022]) | 
-						String.IsEqual(Container.ViewMode,$LOCALIZE[311023])
+						$EXP[isPosterInfo] |
+						$EXP[isLandscapeInfo] |
+						$EXP[isFlixInfo] |
+						$EXP[isWall] |
+						$EXP[isLandscapeWall]
 					]
 			] + 
 			!$EXP[isEpisode] + !String.StartsWith(Container.PluginCategory,Season) + !String.IsEmpty(ListItem.Genre)
@@ -325,13 +327,13 @@
 	</variable>
 
 	<variable name="RightVideoHeader">
-    <value>$VAR[FilterLabel][COLOR unfocused_text]$INFO[Container.CurrentItem][/COLOR] / [COLOR unfocused_text]$INFO[Container.NumItems][/COLOR]$VAR[ClockCrumbs]</value>
+    <value>$VAR[FilterLabel][COLOR unfocused_text]$INFO[Container.NumItems] $LOCALIZE[31036][/COLOR]$VAR[ClockCrumbs]</value>
 
 		<!-- <value>[COLOR unfocused_text]$INFO[Control.GetLabel(10)][/COLOR] • [COLOR unfocused_text]$INFO[Container.CurrentItem][/COLOR] / [COLOR unfocused_text]$INFO[Container.NumItems][/COLOR] • [COLOR unfocused_text]$INFO[System.Time][/COLOR]</value> -->
 	</variable>
 
 	<variable name="FilterLabel">
-    <value condition="Window.IsVisible(videos)">[COLOR unfocused_text]$INFO[Control.GetLabel(10)][/COLOR] • </value>
+    <value condition="Window.IsVisible(videos) + !String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])">[COLOR unfocused_text]$INFO[Control.GetLabel(10)][/COLOR] • </value>
 	</variable>
 
 	<variable name="ClockCrumbs">
@@ -421,7 +423,7 @@
 	</variable>
 
 	<variable name="FocusColorTheme">
-    <value condition="Player.HasVideo + [String.IsEqual(Skin.String(BackgroundSetting),1) | String.IsEqual(Skin.String(BackgroundSetting),2)] + String.IsEqual(Skin.String(FocusColorThemeSetting),0)">$INFO[Window(Home).Property(listitem_logo_color_video)]</value>
+    <value condition="Player.HasVideo + [String.IsEqual(Skin.String(BackgroundSetting),1) | String.IsEqual(Skin.String(BackgroundSetting),2)] + String.IsEqual(Skin.String(FocusColorThemeSetting),0) + !String.IsEmpty(Window(home).Property(listitem_logo_color_video))">$INFO[Window(Home).Property(listitem_logo_color_video)]</value>
     <value condition="Player.HasVideo + [String.IsEqual(Skin.String(BackgroundSetting),1) | String.IsEqual(Skin.String(BackgroundSetting),2)] + String.IsEqual(Skin.String(FocusColorThemeSetting),1)">unfocused_text</value>
 		<value condition="Player.HasVideo + String.IsEqual(Skin.String(BackgroundSetting),0) + String.IsEqual(Skin.String(FocusColorThemeSetting),0)">accent_color</value>
 		<value condition="Player.HasVideo + String.IsEqual(Skin.String(BackgroundSetting),0) + String.IsEqual(Skin.String(FocusColorThemeSetting),1)">unfocused_text</value>
@@ -446,7 +448,7 @@
     <!-- Blur enabled -->
     <value condition="String.IsEqual(Skin.String(BackgroundSetting),1)">80000000</value>
 		<!-- Blur disabled -->
-    <value condition="String.IsEqual(Skin.String(BackgroundSetting),0) + [Control.IsVisible(51) | Control.IsVisible(52) | Control.IsVisible(500) | Control.IsVisible(501)]">80050505</value>
+    <value condition="String.IsEqual(Skin.String(BackgroundSetting),0) + [$EXP[isPosterFlow] | $EXP[isIconWall] | $EXP[isWall] | $EXP[isLandscapeWall]]">80050505</value>
 		<value condition="String.IsEqual(Skin.String(BackgroundSetting),0) + ![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)] + String.IsEqual(Skin.String(ListArtworkChoice.),2)">FF101010</value>
     <value condition="String.IsEqual(Skin.String(BackgroundSetting),0) + ![Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes)] + !String.IsEqual(Skin.String(ListArtworkChoice.),2)">80050505</value>
     <!-- Movies -->
@@ -481,7 +483,7 @@
 	<variable name="PosterFlowArtworkDiffuse">
     <value condition="Skin.HasSetting(Disable.51Dim)">FFE9E9E9</value>
     <value condition="Skin.HasSetting(Enable.SpineClearlogo)">FF4C4C4C</value>
-    <value>FF777777</value>
+    <value>FFBFBFBF</value>
 	</variable>
 
 	<variable name="BorderColorVar">
@@ -550,7 +552,7 @@
 	</variable>
 
 	<variable name="OnBackSettingVar">
-    <value condition="String.IsEqual(Skin.String(onBackSetting),0)">Open main menu</value>
+    <value condition="String.IsEqual(Skin.String(onBackSetting),0)">Open search panel</value>
     <value condition="String.IsEqual(Skin.String(onBackSetting),1)">Reset widget</value>
     <value condition="String.IsEqual(Skin.String(onBackSetting),2)">Both</value>
 	</variable>
@@ -563,7 +565,7 @@
 	</variable>
 
 	<variable name="OnLeftSettingVar">
-	<value condition="String.IsEqual(Skin.String(onLeftSetting),0)">Open main menu</value>
+	<value condition="String.IsEqual(Skin.String(onLeftSetting),0)">Open search panel</value>
 	<value condition="String.IsEqual(Skin.String(onLeftSetting),1)">Wrap to end</value>
 	</variable>
 
@@ -571,6 +573,31 @@
     <value condition="String.IsEqual(Skin.String(onLeftSetting),0) + String.IsEqual(Skin.String(onBackSetting),0)">Skin.SetString(onLeftSetting,1)</value>
     <value condition="String.IsEqual(Skin.String(onLeftSetting),1)">Skin.SetString(onLeftSetting,0)</value>
     <value condition="String.IsEqual(Skin.String(onLeftSetting),0) + String.IsEqual(Skin.String(onBackSetting),2)">Skin.SetString(onLeftSetting,1)</value>
+	</variable>
+
+	<variable name="HomeOnBackSettingVar">
+		<value condition="String.IsEqual(Skin.String(onBackSetting.Home),1)">Open main menu</value>
+		<value>Open tab row</value>
+	</variable>
+
+	<variable name="HomeOnBackSettingToggleVar">
+		<value condition="String.IsEqual(Skin.String(onBackSetting.Home),1)">Skin.SetString(onBackSetting.Home,0)</value>
+		<value>Skin.SetString(onBackSetting.Home,1)</value>
+	</variable>
+
+	<variable name="HomeOnLeftSettingVar">
+		<value condition="String.IsEqual(Skin.String(onLeftSetting.Home),1)">Wrap to end of row</value>
+		<value>Open main menu</value>
+	</variable>
+
+	<variable name="HomeTabLoadingSettingVar">
+		<value condition="Skin.HasSetting(HomeWalls.ManualLoading)">Manual</value>
+		<value>Auto</value>
+	</variable>
+
+	<variable name="HomeOnLeftSettingToggleVar">
+		<value condition="String.IsEqual(Skin.String(onLeftSetting.Home),1)">Skin.SetString(onLeftSetting.Home,0)</value>
+		<value>Skin.SetString(onLeftSetting.Home,1)</value>
 	</variable>
 
 	<variable name="OSDAudioButtonSettingVar">
@@ -649,33 +676,6 @@
 		<value condition="String.IsEqual(Skin.String(53OnDownSetting.Other),0)">Skin.SetString(53OnDownSetting.Other,1)</value>
 		<value condition="String.IsEqual(Skin.String(53OnDownSetting.Other),1)">Skin.SetString(53OnDownSetting.Other,0)</value>
 		<value>Skin.SetString(53OnDownSetting.Other,0)</value>
-	</variable>
-
-	<!-- FLIXINFO TOGGLES -->
-	<variable name="56OnDownSettingVar.MovieTV">
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.MovieTV),0)">Scrollbar</value>
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.MovieTV),1)">Play trailer</value>
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.MovieTV),2)">Information</value>
-		<value>Scrollbar</value>
-	</variable>
-
-	<variable name="56OnDownSettingVar.Other">
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.Other),0)">Scrollbar</value>
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.Other),1)">Information</value>
-		<value>Scrollbar</value>
-	</variable>
-
-	<variable name="56OnDownToggleVar.MovieTV">
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.MovieTV),0)">Skin.SetString(56OnDownSetting.MovieTV,1)</value>
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.MovieTV),1)">Skin.SetString(56OnDownSetting.MovieTV,2)</value>
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.MovieTV),2)">Skin.SetString(56OnDownSetting.MovieTV,0)</value>
-		<value>Skin.SetString(56OnDownSetting.MovieTV,0)</value>
-	</variable>
-
-	<variable name="56OnDownToggleVar.Other">
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.Other),0)">Skin.SetString(56OnDownSetting.Other,1)</value>
-		<value condition="String.IsEqual(Skin.String(56OnDownSetting.Other),1)">Skin.SetString(56OnDownSetting.Other,0)</value>
-		<value>Skin.SetString(56OnDownSetting.Other,0)</value>
 	</variable>
 
 	<variable name="StudioLogoSettingVar">
@@ -780,6 +780,15 @@
 	<variable name="ArtworkSize54ToggleVar">
 		<value condition="String.IsEqual(Skin.String(ArtworkSize54Setting),0)">Skin.SetString(ArtworkSize54Setting,1)</value>
 		<value condition="String.IsEqual(Skin.String(ArtworkSize54Setting),1)">Skin.SetString(ArtworkSize54Setting,0)</value>
+	</variable>
+
+	<variable name="Artwork56SettingVar">
+		<value condition="String.IsEqual(Skin.String(Artwork56Setting),1)">Landscape</value>
+		<value>Poster</value>
+	</variable>
+	<variable name="Artwork56ToggleVar">
+		<value condition="String.IsEqual(Skin.String(Artwork56Setting),1)">Skin.SetString(Artwork56Setting,0)</value>
+		<value>Skin.SetString(Artwork56Setting,1)</value>
 	</variable>
 
 	<variable name="ArtworkSize54SettingVar">
@@ -913,8 +922,6 @@
 		<value condition="Window.IsVisible(tvguide)">73FFFFFF</value>
 		<value condition="Window.IsVisible(tvchannels) | Window.IsVisible(tvtimers) | Window.IsVisible(tvsearch)">$VAR[BlurBrightnessVar]</value>
 		<value condition="$EXP[isPosterFlow]">73FFFFFF</value>
-		<value condition="[Window.IsVisible(Home) | Window.IsVisible(1121)] + String.IsEmpty(Window(Home).Property(FlixWidget))">$VAR[BlurBrightnessVar]</value>
-		<value condition="[Window.IsVisible(Home) | Window.IsVisible(1121)] + !String.IsEmpty(Window(Home).Property(FlixWidget))">59FFFFFF</value>
 		<value>$VAR[BlurBrightnessVar]</value>
 	</variable>
 
@@ -1022,16 +1029,6 @@
 		<value>brightness</value>
 	</variable>
 	
-	<variable name="SearchSettingVar">
-		<value condition="String.IsEqual(Skin.String(SearchSetting),0)">Search window</value>
-		<value condition="String.IsEqual(Skin.String(SearchSetting),1)">Search dialog</value>
-	</variable>
-
-	<variable name="SearchToggleVar">
-		<value condition="String.IsEqual(Skin.String(SearchSetting),0)">Skin.SetString(SearchSetting,1)</value>
-		<value condition="String.IsEqual(Skin.String(SearchSetting),1)">Skin.SetString(SearchSetting,0)</value>
-	</variable>
-
 	<!-- MAIN MENU SUBMENU BUTTONS -->
 	<variable name="HomePowerButtonActionVar">
 		<value condition="Skin.HasSetting(OneClickClose)">Quit()</value>
@@ -1039,8 +1036,7 @@
 	</variable>
 
 	<variable name="HomeSearchButtonActionVar">
-		<value condition="String.IsEqual(Skin.String(SearchSetting),0)">RunScript(script.altus.helper,mode=open_search_window)</value>
-		<value condition="String.IsEqual(Skin.String(SearchSetting),1)">ActivateWindow(1107)</value>
+		<value>RunScript(script.altus.helper,mode=open_search_window)</value>
 	</variable>
 
 	<!-- MAIN MENU SUBMENU BUTTON LABELS -->
@@ -1049,35 +1045,26 @@
 		<value condition="Control.HasFocus(801) + !Skin.HasSetting(OneClickClose)">Open shutdownmenu</value>
 		<value condition="Control.HasFocus(802)">Open settings</value>
 		<value condition="Control.HasFocus(803)">Open widget manager</value>
-		<value condition="Control.HasFocus(804) + String.IsEqual(Skin.String(SearchSetting),0)">Open search window</value>
-		<value condition="Control.HasFocus(804) + String.IsEqual(Skin.String(SearchSetting),1)">Open search dialog</value>
+		<value condition="Control.HasFocus(804)">Open search window</value>
 		<value condition="Control.HasFocus(805) + Integer.IsEqual(System.AddonUpdateCount,1)">$INFO[System.AddonUpdateCount] available update</value>
 		<value condition="Control.HasFocus(805) + Integer.IsGreater(System.AddonUpdateCount,1)">$INFO[System.AddonUpdateCount] available updates</value>
 		<value condition="Control.HasFocus(806)">Toggle fullscreen</value>
 	</variable>
 
-	<!-- ADDON LAUNCHER SUBMENU BUTTON LABELS -->
-	<variable name="AddonLauncherSubmenuButtonLabelsVar">
-		<value condition="Control.HasFocus(801)">Open addon browser</value>
-		<value condition="Control.HasFocus(802)">Install from zip</value>
-		<value condition="Control.HasFocus(803)">Search addons</value>
-		<value condition="Control.HasFocus(804) + Integer.IsEqual(System.AddonUpdateCount,1)">$INFO[System.AddonUpdateCount] available update</value>
-		<value condition="Control.HasFocus(804) + Integer.IsGreater(System.AddonUpdateCount,1)">$INFO[System.AddonUpdateCount] available updates</value>
-	</variable>
-
 	<!-- SEARCH WINDOW SUBMENU BUTTON LABELS -->
 	<variable name="SearchSubmenuButtonLabelsVar">
-		<value condition="Control.HasFocus(801)">Search provider: [B]$VAR[CurrentSearchProviderVar][/B]</value>
-		<value condition="Control.HasFocus(802)">Perform a new search</value>
-		<value condition="Control.HasFocus(803)">Open TRAKT lists</value>
-		<value condition="Control.HasFocus(804)">Clear search history</value>
-		<value condition="Control.HasFocus(805)">Toggle fullscreen</value>
+		<value condition="Control.HasFocus(801)">New search</value>
+		<value condition="Control.HasFocus(802)">Filter by...</value>
+		<value condition="Control.HasFocus(803) + !Skin.HasSetting(Disable.MiniQwerty)">Hide QWERTY keyboard</value>
+		<value condition="Control.HasFocus(803) + Skin.HasSetting(Disable.MiniQwerty)">Show QWERTY keyboard</value>
+		<value condition="Control.HasFocus(804)">Search history</value>
 	</variable>
 
 	<variable name="ContextMenuTitleVar">
-		<value condition="$EXP[isMovie] | $EXP[isTVShow]">[COLOR unfocused_text]$INFO[ListItem.Title][/COLOR]</value>
-		<value condition="$EXP[isSeason]">[COLOR unfocused_text]$INFO[ListItem.TVShowTitle][/COLOR] | [COLOR unfocused_text]$INFO[ListItem.Title][/COLOR]</value>
-		<value condition="$EXP[isEpisode]">[COLOR unfocused_text]$INFO[ListItem.TVShowTitle][/COLOR] | [COLOR unfocused_text]$INFO[ListItem.Season]x$INFO[ListItem.Episode][/COLOR]</value>
+		<value condition="String.IsEqual(Window(Home).Property(CurrentDBType),movie) | String.IsEqual(Window(Home).Property(CurrentDBType),tvshow)">[COLOR unfocused_text]$INFO[Window(Home).Property(altus.ctx.title)][/COLOR]</value>
+		<value condition="String.IsEqual(Window(Home).Property(CurrentDBType),season)">[COLOR unfocused_text]$INFO[Window(Home).Property(altus.ctx.tvshowtitle)][/COLOR] | [COLOR unfocused_text]$INFO[Window(Home).Property(altus.ctx.title)][/COLOR]</value>
+		<value condition="String.IsEqual(Window(Home).Property(CurrentDBType),episode) + [String.IsEmpty(Window(Home).Property(altus.ctx.season)) | String.IsEmpty(Window(Home).Property(altus.ctx.episode))]">[COLOR unfocused_text]$INFO[Window(Home).Property(altus.ctx.tvshowtitle)][/COLOR]</value>
+		<value condition="String.IsEqual(Window(Home).Property(CurrentDBType),episode)">[COLOR unfocused_text]$INFO[Window(Home).Property(altus.ctx.tvshowtitle)][/COLOR] | [COLOR unfocused_text]$INFO[Window(Home).Property(altus.ctx.season)]$INFO[Window(Home).Property(altus.ctx.episode),x,][/COLOR]</value>
 		<value>[COLOR unfocused_text]Context menu[/COLOR]</value>
 	</variable>
 
@@ -1128,7 +1115,7 @@
 		<value condition="[Container.Content(favourites) + !String.IsEmpty(Skin.String(Skin.ForcedView.favourites))]">[B]$INFO[Skin.String(Skin.ForcedView.favourites)][/B]</value>
 		<value condition="[Container.Content(unknown) + !String.IsEmpty(Skin.String(Skin.ForcedView.unknown))]">[B]$INFO[Skin.String(Skin.ForcedView.unknown)][/B]</value>
 		<value condition="[Container.Content(videos) + !String.IsEmpty(Skin.String(Skin.ForcedView.videos))]">[B]$INFO[Skin.String(Skin.ForcedView.videos)][/B]</value>
-		<value>$INFO[Container.Viewmode]</value>
+		<value>[COLOR grey]$INFO[Container.Viewmode][/COLOR]</value>
 	</variable>	
 
 	<variable name="APIKeyLabel">
@@ -1140,8 +1127,8 @@
 	</variable>
 
 	<variable name="ActiveWidgetConfigVar">
-		<value condition="!String.IsEmpty(Skin.String(altus_active_widget_config))">Active config: [B]$INFO[Skin.String(altus_active_widget_config)][/B]</value>
-		<value>Active config: [B]NONE[/B]</value>
+		<value condition="!String.IsEmpty(Skin.String(altus_active_widget_config))">Active profile: [B]$INFO[Skin.String(altus_active_widget_config)][/B]</value>
+		<value>Active profile: [B]NONE[/B]</value>
 	</variable>
 
 </includes>

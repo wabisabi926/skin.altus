@@ -15,15 +15,16 @@
 				<param name="header_id" value="1" />
 				<param name="header_top" value="15" />
 				<param name="divider_top" value="90" />
+				<param name="blur_mask" value="masks/confirm.png" />
 			</include>
 			<control type="textbox" id="9">
 				<left>40</left>
 				<top>105</top>
-				<right>40</right>
+				<right>60</right>
 				<height>190</height>
-				<align>center</align>
+				<align>left</align>
 				<label/>
-				<font>font32</font>
+				<font>font32_bold</font>
 				<textcolor>unfocused_text</textcolor>
 				<autoscroll time="3000" delay="4000" repeat="5000">true</autoscroll>
 			</control>
@@ -38,7 +39,7 @@
 			<control type="grouplist" id="9000">
 				<orientation>horizontal</orientation>
 				<left>0</left>
-				<top>330</top>
+				<top>320</top>
 				<width>1144</width>
 				<align>center</align>
 				<itemgap>dialogbuttons_itemgap</itemgap>

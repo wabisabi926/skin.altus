@@ -505,6 +505,12 @@ msgctxt "#311024"
 msgid "Season"
 msgstr ""
 
+#. viewtype name
+#: /xml/View_58_AddonTiles.xml
+msgctxt "#31102"
+msgid "AddonTiles"
+msgstr ""
+
 #: /xml/SmartPlaylistRule.xml
 msgctxt "#31103"
 msgid "Enter text here..."
@@ -952,4 +958,16 @@ msgstr ""
 #. Label to show the system info page
 msgctxt "#31611"
 msgid "System"
+msgstr ""
+
+#: /xml/Home.xml
+#. Weather section tab showing the provider's weather maps
+msgctxt "#31612"
+msgid "Maps"
+msgstr ""
+
+#: /xml/DialogPVRChannelManager.xml
+#. Dialog button applying pending channel edits without closing
+msgctxt "#31613"
+msgid "Apply"
 msgstr ""

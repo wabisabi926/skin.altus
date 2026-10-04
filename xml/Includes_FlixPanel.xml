@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<include name="PlotHeight_1080_FontSize_Default">
-		<height max="335">auto</height>
-	</include>
-	<include name="PlotHeight_4K_FontSize_Default">
-		<height max="330">auto</height>
-	</include>
-	<include name="PlotHeight_1080_FontSize_Large">
-		<height max="297">auto</height>
-	</include>
-	<include name="PlotHeight_4K_FontSize_Large">
-		<height max="297">auto</height>
-	</include>
-	<include name="PlotHeight_51_FontSize_Default">
-		<height max="78">auto</height>
-	</include>
 	<include name="PlotHeight_51_FontSize_Large">
-		<height max="87">auto</height>
-	</include>
-	<include name="Flix_Font_Default">
-		<font>font27_plot</font>
+		<height max="50">auto</height>
 	</include>
 	<include name="Flix_Font_Large">
 		<font>font32</font>
@@ -32,10 +14,11 @@
 				<top>-70</top>
 				<visible>[$EXP[isWall] + Skin.HasSetting(Enable.500Info)] | [$EXP[isLandscapeWall] + Skin.HasSetting(Enable.501Info)]</visible>
 				<control type="grouplist">
-					<top>960</top>
+					<top>0</top>
+					<bottom>10</bottom>
 					<orientation>vertical</orientation>
 					<align>right</align>
-					<itemgap>0</itemgap>
+					<itemgap>3</itemgap>
 					<include condition="!String.IsEmpty(Skin.String(valid_api_key))" content="HorizontalRatings">
 						<param name="align" value="center"/>
 					</include>
@@ -43,20 +26,17 @@
 						<align>center</align>
 						<height>35</height>
 						<label>$VAR[VideoInfoPanelTop]</label>
-						<include condition="String.IsEqual(Skin.String(FontSizeSetting),0)">Flix_Font_Default</include>
-						<include condition="String.IsEqual(Skin.String(FontSizeSetting),1)">Flix_Font_Large</include>
+						<font>font32_bold</font>
 						<textcolor>$VAR[FocusColorTheme]</textcolor>
 						<scroll>true</scroll>
 						<scrollspeed>150</scrollspeed>
 					</control>
 					<control type="textbox">
-						<include condition="String.IsEqual(Skin.String(FontSizeSetting),0)">PlotHeight_51_FontSize_Default</include>
-						<include condition="String.IsEqual(Skin.String(FontSizeSetting),1)">PlotHeight_51_FontSize_Large</include>
+						<include>PlotHeight_51_FontSize_Large</include>
 						<bottom>70</bottom>
 						<label>$VAR[RI_Plot]</label>
-						<include condition="String.IsEqual(Skin.String(FontSizeSetting),0)">Flix_Font_Default</include>
-						<include condition="String.IsEqual(Skin.String(FontSizeSetting),1)">Flix_Font_Large</include>
-						<textcolor>unfocused_text</textcolor>
+						<font>font32_bold</font>
+						<textcolor>bright_text</textcolor>
 						<align>center</align>
 						<autoscroll delay="10000" time="5000" repeat="10000">Skin.HasSetting(autoscroll)</autoscroll>
 						<visible>!String.IsEqual(Container.PluginName,plugin.program.openwizard) + [String.IsEqual(Container.Viewmode,$LOCALIZE[311022]) | String.IsEqual(Container.Viewmode,$LOCALIZE[311023])]</visible>
@@ -78,8 +58,8 @@
 	<include name="PlotBox">
 		<control type="textbox">
 			<height max="$PARAM[max_height]">auto</height>
-			<font>font27</font>
-			<textcolor>unfocused_text</textcolor>
+			<font>font27_title</font>
+			<textcolor>bright_text</textcolor>
 			<align>left</align>
 			<label>$VAR[RI_Plot]</label>
 			<autoscroll delay="$PARAM[delay_repeat]" time="1700" repeat="$PARAM[delay_repeat]">Skin.HasSetting(autoscroll)</autoscroll>
@@ -93,7 +73,7 @@
 			<control type="group">
 				<width>418</width>
 				<animation effect="fade" condition="$EXP[isContent]" time="300" end="100" tween="sine" easing="inout">Conditonal</animation>
-				<include>OpenClose_Left</include>
+				<include>OpenClose_FadeZoom</include>
 				<control type="grouplist">
 					<left>$PARAM[left]</left>
 					<top>0</top>
@@ -107,16 +87,23 @@
 							<align>left</align>
 							<height>50</height>
 							<label>$VAR[InfoTitle]</label>
-							<font>font36_title</font>
-							<textcolor>unfocused_text</textcolor>
+							<font>font40_bold</font>
+							<textcolor>bright_text</textcolor>
 							<scroll>true</scroll>
 							<scrollspeed>170</scrollspeed>
 							<visible>
 									[
-											!Window.IsVisible(videos) + 
-											!String.IsEqual(Skin.String(WidgetClearlogoSetting),2) + 
+											!Window.IsVisible(videos) +
+											!String.IsEqual(Skin.String(WidgetClearlogoSetting),2) +
 											[
-													String.IsEqual(Skin.String(WidgetClearlogoSetting),1) | 
+													String.IsEqual(Skin.String(WidgetClearlogoSetting),1) |
+													String.IsEmpty(ListItem.Art(clearlogo))
+											]
+									] |
+									[
+											Window.IsVisible(videos) +
+											[
+													!Skin.HasSetting(Enable.Clearlogo) |
 													String.IsEmpty(ListItem.Art(clearlogo))
 											]
 									]
@@ -130,10 +117,17 @@
 							<label></label>
 							<visible>
 									[
-											!Window.IsVisible(videos) + 
-											!String.IsEqual(Skin.String(WidgetClearlogoSetting),2) + 
+											!Window.IsVisible(videos) +
+											!String.IsEqual(Skin.String(WidgetClearlogoSetting),2) +
 											[
-													String.IsEqual(Skin.String(WidgetClearlogoSetting),1) | 
+													String.IsEqual(Skin.String(WidgetClearlogoSetting),1) |
+													String.IsEmpty(ListItem.Art(clearlogo))
+											]
+									] |
+									[
+											Window.IsVisible(videos) +
+											[
+													!Skin.HasSetting(Enable.Clearlogo) |
 													String.IsEmpty(ListItem.Art(clearlogo))
 											]
 									]
@@ -201,9 +195,8 @@
 							<align>left</align>
 							<height max="300">auto</height>
 							<label>$VAR[EpisodeTitle]</label>
-							<include condition="String.IsEqual(Skin.String(FontSizeSetting),0)">Flix_Font_Default</include>
-							<include condition="String.IsEqual(Skin.String(FontSizeSetting),1)">Flix_Font_Large</include>
-							<textcolor>unfocused_text</textcolor>
+							<font>font34_bold</font>
+							<textcolor>bright_text</textcolor>
 							<scroll>true</scroll>
 							<scrollspeed>150</scrollspeed>
 							<visible>$EXP[isEpisode]</visible>
@@ -224,9 +217,8 @@
 							<align>left</align>
 							<height max="300">auto</height>
 							<label>$VAR[VI_WidgetInfoPanelTop]</label>
-							<include condition="String.IsEqual(Skin.String(FontSizeSetting),0)">Flix_Font_Default</include>
-							<include condition="String.IsEqual(Skin.String(FontSizeSetting),1)">Flix_Font_Large</include>
-							<textcolor>unfocused_text</textcolor>
+							<font>font32_bold</font>
+							<textcolor>bright_text</textcolor>
 							<scroll>true</scroll>
 							<scrollspeed>150</scrollspeed>
 							<visible>$EXP[hasAnyVI]</visible>
@@ -248,15 +240,11 @@
 						<include>FlixPanelRatings</include>
 						
 						<control type="textbox">
-							<include condition="!Integer.IsGreater(System.ScreenHeight,1080) + String.IsEqual(Skin.String(FontSizeSetting),0)">PlotHeight_1080_FontSize_Default</include>
-							<include condition="Integer.IsGreater(System.ScreenHeight,1080) + String.IsEqual(Skin.String(FontSizeSetting),0)">PlotHeight_4K_FontSize_Default</include>
-							<include condition="!Integer.IsGreater(System.ScreenHeight,1080) + String.IsEqual(Skin.String(FontSizeSetting),1)">PlotHeight_1080_FontSize_Large</include>
-							<include condition="Integer.IsGreater(System.ScreenHeight,1080) + String.IsEqual(Skin.String(FontSizeSetting),1)">PlotHeight_4K_FontSize_Large</include>
-							<include condition="String.IsEqual(Skin.String(FontSizeSetting),0)">Flix_Font_Default</include>
-							<include condition="String.IsEqual(Skin.String(FontSizeSetting),1)">Flix_Font_Large</include>
-							<textcolor>unfocused_text</textcolor>
+							<font>font32_bold</font>
+							<textcolor>bright_text</textcolor>
 							<align>left</align>
 							<label>$VAR[RI_Plot]</label>
+							<height max="247">auto</height>
 							<autoscroll delay="13000" time="3000" repeat="13000">Skin.HasSetting(autoscroll)</autoscroll>
 							<visible>$EXP[showPlot] + [[Window.IsVisible(Home) | Window.IsVisible(1121)] | [String.IsEqual(Container.Viewmode,$LOCALIZE[31101]) | String.IsEqual(Container.Viewmode,$LOCALIZE[311012]) | String.IsEqual(Container.Viewmode,$LOCALIZE[31107])]]</visible>
 						</control>

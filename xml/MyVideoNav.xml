@@ -4,7 +4,6 @@
 	<backgroundcolor>background</backgroundcolor>
 	<views>50,51,52,53,54,55,56,57,500,501</views>
 	<menucontrol>9000</menucontrol>
-	<onload>ClearProperty(FlixWidget,Home)</onload>
 	<controls>
 		<include>DefaultBackground</include>
 		<control type="group">
@@ -22,17 +21,17 @@
 			<include>View_501_LandscapeWall</include>
 			<control type="group">
 				<depth>DepthContentPanel</depth>
-				<include>OpenClose_Left</include>
-				<include>Visible_Left</include>
+				<include>OpenClose_FadeZoom</include>
+				<include>Vis_FadeZoom</include>
 				<visible>Control.IsVisible(500) | Control.IsVisible(501)</visible>
 				<include>FlixPanel</include>
 			</control>
 			<control type="group">
 				<depth>DepthContentPanel</depth>
-				<include>OpenClose_Left</include>
-				<include>Visible_Left</include>
+				<include>OpenClose_FadeZoom</include>
+				<include>Vis_FadeZoom</include>
 				<include>VerticalInfoPanel</include>
-				<visible>Control.IsVisible(54) | Control.IsVisible(55) | Control.IsVisible(56)</visible>
+				<visible>Control.IsVisible(54) | Control.IsVisible(55)</visible>
 				<control type="group">
 					<left>20</left>
 					<top>245</top>
@@ -64,8 +63,8 @@
 			<include>MediaMenuMouseOverlay</include>
 			<control type="group">
 				<include>MediaMenuCommon</include>
+				<include>MediaMenuSectionHeader</include>
 				<control type="grouplist" id="9000">
-					<top>70</top>
 					<include>MediaMenuListCommon</include>
 					<control type="button" id="10">
 						<description>Watched Toggle</description>
@@ -73,10 +72,6 @@
 						<label>$LOCALIZE[20367]</label>
 						<label2>[B]$INFO[Container.NumItems][/B]</label2>
 						<visible>Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.content(seasons) | Container.Content(episodes) | Container.Content(MusicVideos)</visible>
-					</control>
-					<control type="label" id="203">
-						<include>MediaMenuLabelCommon</include>
-						<label>$LOCALIZE[31020]</label>
 					</control>
 					<control type="radiobutton" id="16">
 						<description>PartyMode</description>

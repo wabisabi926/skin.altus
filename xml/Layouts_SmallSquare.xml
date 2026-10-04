@@ -16,7 +16,14 @@
 				<control type="image">
 					<width>249</width>
 					<height>249</height>
-					<texture colordiffuse="66000000">masks/small-square.png</texture>
+					<texture colordiffuse="4D000000">masks/small-square.png</texture>
+					<visible>![$PARAM[focused] + Control.HasFocus($PARAM[list_id]) + Integer.IsEqual(ListItem.CurrentItem,Container($PARAM[list_id]).CurrentItem)]</visible>
+				</control>
+				<control type="image">
+					<width>249</width>
+					<height>249</height>
+					<texture colordiffuse="A6000000">masks/small-square.png</texture>
+					<visible>$PARAM[focused] + Control.HasFocus($PARAM[list_id]) + Integer.IsEqual(ListItem.CurrentItem,Container($PARAM[list_id]).CurrentItem)</visible>
 				</control>
 				<control type="image">
 					<centertop>50%</centertop>
@@ -31,24 +38,23 @@
 					<aspectratio scalediffuse="false">scale</aspectratio>
 					<visible>$EXP[isContent]</visible>
 				</control> -->
-				<control type="image">
-					<texture border="20" colordiffuse="$VAR[FocusColorTheme]" infill="false">masks/bordertexture-20.png</texture>
-					<visible>[$PARAM[focused] + Control.HasFocus($PARAM[list_id])] | [$PARAM[focused] + ControlGroup(400).HasFocus]</visible>
-					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-				</control>
+				<include content="FocusBorder">
+					<param name="list_id" value="$PARAM[list_id]"/>
+					<param name="focused" value="$PARAM[focused]"/>
+				</include>
 				<control type="label">
 					<centerleft>50%</centerleft>
 					<!-- <left>10</left> -->
-					<top>236</top>
+					<top>244</top>
 					<left>10</left>
 					<right>10</right>
 					<height>75</height>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[single_label]</label>
-					<scroll>$PARAM[focused] + Control.HasFocus($PARAM[list_id])</scroll>
+					<scroll>$PARAM[focused] + [Control.HasFocus($PARAM[list_id]) + Integer.IsEqual(ListItem.CurrentItem,Container($PARAM[list_id]).CurrentItem)]</scroll>
 					<scrollspeed>100</scrollspeed>
-					<font>font25</font>
+					<font>font23_title</font>
 					<textcolor>unfocused_text</textcolor>
 					<visible>!String.IsEqual(ListItem.DBType,album)</visible>
 				</control>
@@ -58,17 +64,17 @@
 					<left>10</left>
 					<right>10</right>
 					<control type="label">
-						<top>236</top>
+						<top>244</top>
 						<label>$PARAM[sub_label]</label>
-						<font>font10</font>
+						<font>font23_title</font>
 						<shadowcolor>text_shadow</shadowcolor>
 						<scroll>$PARAM[focused]</scroll>
 						<align>center</align>
 					</control>
 					<control type="label">
-						<top>284</top>
+						<top>292</top>
 						<label>$PARAM[main_label]</label>
-						<font>font12</font>
+						<font>font27_title</font>
 						<shadowcolor>text_shadow</shadowcolor>
 						<scroll>$PARAM[focused]</scroll>
 						<align>center</align>

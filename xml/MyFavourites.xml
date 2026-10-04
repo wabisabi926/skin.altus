@@ -7,7 +7,7 @@
 	<views>50,52,56,500,501</views>
 	<menucontrol>9000</menucontrol>
 	<controls>
-		<include>ZeroFadeBackground</include>
+		<include>SimpleBackground</include>
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
 			<include>View_50_List</include>
@@ -17,8 +17,8 @@
 			<include>View_501_LandscapeWall</include>
 			<control type="group">
 				<depth>DepthContentPanel</depth>
-				<include>OpenClose_Left</include>
-				<include>Visible_Left</include>
+				<include>OpenClose_FadeZoom</include>
+				<include>Vis_FadeZoom</include>
 				<visible>Control.IsVisible(56)</visible>
 				<include>ListThumbInfoPanel</include>
 			</control>
@@ -32,8 +32,8 @@
 			<include>MediaMenuMouseOverlay</include>
 			<control type="group">
 				<include>MediaMenuCommon</include>
+				<include>MediaMenuSectionHeader</include>
 				<control type="grouplist" id="9000">
-					<top>50</top>
 					<include>MediaMenuListCommon</include>
 					<include>MediaMenuNowPlaying</include>
 				</control>

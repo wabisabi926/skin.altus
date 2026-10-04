@@ -20,9 +20,15 @@
 					<!-- <top>39</top> -->
 					<left>28</left>
 					<top>0</top>
-					<include content="PosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="500"/>
+							<param name="list_id" value="500"/>
+						</include>
+						<include content="PosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -50,9 +56,15 @@
 					<!-- <top>39</top> -->
 					<left>48</left>
 					<top>0</top>
-					<include content="PosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="500"/>
+							<param name="list_id" value="500"/>
+						</include>
+						<include content="PosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -80,9 +92,15 @@
 					<!-- <top>39</top> -->
 					<top>0</top>
 					<left>8</left>
-					<include content="SmallPosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="500"/>
+							<param name="list_id" value="500"/>
+						</include>
+						<include content="SmallPosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -110,9 +128,15 @@
 					<!-- <top>39</top> -->
 					<top>0</top>
 					<left>8</left>
-					<include content="SmallPosterLayout">
-						<param name="focused" value="true" />
-					</include>
+					<control type="group">
+						<include content="ViewFocusAnimations">
+							<param name="id" value="500"/>
+							<param name="list_id" value="500"/>
+						</include>
+						<include content="SmallPosterLayout">
+							<param name="focused" value="true" />
+						</include>
+					</control>
 					<include>FocusBounce</include>
 					<include>VideoTrailerControl</include>
 				</control>
@@ -122,17 +146,14 @@
 
 	<include name="View_500_Wall">
 		<control type="group">
-			<!-- <include>OpenClose_Right</include>
-			<include>Visible_Right</include> -->
+			<include content="Wall_FadeZoom">
+				<param name="id" value="500"/>
+			</include>
 			<left>0</left>
       <height>100%</height>
 			<visible>Control.IsVisible(500)</visible>
-			<animation condition="Control.HasFocus(500) | Control.HasFocus(532) | ControlGroup(9000).HasFocus">
-				<effect type="fade" start="0" end="100" time="300" tween="cubic" easing="in"/>
-				<effect type="slide" start="0,937" end="0,0" time="500" tween="cubic" easing="out" />
-			</animation>
 			<control type="panel" id="500">
-				<top>65</top>
+				<top>81</top>
 				<onright>532</onright>
 				<onleft>9000</onleft>
 				<onup>500</onup>
@@ -262,7 +283,7 @@
 				<right>video_header_right</right>
 				<top>20</top>
 				<label>$VAR[LeftVideoHeader]</label>
-				<font>font30_title_uppercase</font>
+				<font>font36_title</font>
 				<textcolor>$VAR[FocusColorTheme]</textcolor>
 				<shadowcolor>text_shadow</shadowcolor>
 				<align>left</align>
@@ -277,7 +298,7 @@
 				<top>20</top>
 				<width>1815</width>
 				<label>$VAR[RightVideoHeader]</label>
-				<font>font30_title_uppercase</font>
+				<font>font36_title</font>
 				<textcolor>$VAR[FocusColorTheme]</textcolor>
 				<shadowcolor>text_shadow</shadowcolor>
 				<align>right</align>
@@ -288,7 +309,7 @@
 			<control type="image">
         <bottom>0</bottom>
         <width>100%</width>
-        <height>350</height>
+        <height>310</height>
         <texture colordiffuse="black">overlays/bottombarinfo.png</texture>
         <visible>Skin.HasSetting(Enable.500Info)</visible>
         <animation effect="fade" start="0" end="100" time="300">VisibleChange</animation>

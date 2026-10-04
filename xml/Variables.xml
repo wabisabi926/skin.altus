@@ -10,7 +10,7 @@
     <value condition="String.IsEmpty(ListItem.EpgEventTitle)">$INFO[ListItem.Label]</value>
     <value>$INFO[ListItem.ChannelName]</value>
 	</variable> -->
-	<variable name="PVRMySearchLabel1Var">
+	<variable name="PVRListItemChannelLabelVar">
 		<value condition="!String.IsEmpty(ListItem.ChannelName)">$INFO[ListItem.ChannelName]</value>
 		<value>$INFO[ListItem.Label]</value>
 	</variable>
@@ -143,16 +143,8 @@
 		<value>$INFO[Container(6).NumItems] [COLOR unfocused_text]$LOCALIZE[31036][/COLOR] - [COLOR unfocused_text]$INFO[Container(6).CurrentItem]/$INFO[Container(6).NumItems][/COLOR]</value>
 	</variable>
 	<variable name="FileBrowserSelectLabel">
-		<value condition="String.IsEqual(Skin.String(BackgroundSetting),0)">$VAR[FileBrowserSelectLabel.NoBlur]</value>
-		<value>$VAR[FileBrowserSelectLabel.Blur]</value>
-	</variable>
-	<variable name="FileBrowserSelectLabel.NoBlur">
-		<value condition="Control.IsVisible(450)">[COLOR button_focus]$INFO[Container(450).NumItems][/COLOR] [COLOR unfocused_text]$LOCALIZE[31036][/COLOR] - $INFO[Container(450).CurrentItem]/$INFO[Container(450).NumItems]</value>
-		<value>[COLOR button_focus]$INFO[Container(451).NumItems][/COLOR] [COLOR unfocused_text]$LOCALIZE[31036][/COLOR] - $INFO[Container(451).CurrentItem]/$INFO[Container(451).NumItems]</value>
-	</variable>
-	<variable name="FileBrowserSelectLabel.Blur">
-		<value condition="Control.IsVisible(450)">$INFO[Container(450).NumItems] [COLOR unfocused_text]$LOCALIZE[31036][/COLOR] - [COLOR unfocused_text]$INFO[Container(450).CurrentItem]/$INFO[Container(450).NumItems][/COLOR]</value>
-		<value>$INFO[Container(451).NumItems] [COLOR unfocused_text]$LOCALIZE[31036][/COLOR] - [COLOR unfocused_text]$INFO[Container(451).CurrentItem]/$INFO[Container(451).NumItems][/COLOR]</value>
+		<value condition="Control.IsVisible(450)">$INFO[Container(450).NumItems] [COLOR unfocused_text]$LOCALIZE[31036][/COLOR]</value>
+		<value>$INFO[Container(451).NumItems] [COLOR unfocused_text]$LOCALIZE[31036][/COLOR]</value>
 	</variable>
 	<!-- <variable name="BannerArtVar">
 		<value condition="ListItem.IsParentFolder">DefaultBackBanner.png</value>
@@ -224,13 +216,13 @@
     <value>[COLOR unfocused_text]$INFO[ListItem.Label][/COLOR]</value>
 	</variable>
 	<variable name="AddonsLabel2Var">
-    <value condition="ListItem.Property(addon.downloading)">[COLOR unfocused_text]$INFO[ListItem.Property(addon.status)][/COLOR]</value>
-    <value condition="!Container.SortMethod(1)">$INFO[ListItem.Label2]</value>
-    <value condition="String.IsEqual(ListItem.Path,addons://all/) + !String.IsEmpty(ListItem.AddonOrigin) + !String.IsEmpty(ListItem.AddonVersion)">[COLOR unfocused_text]$INFO[ListItem.AddonOrigin][/COLOR] [B]»[/B] [COLOR unfocused_text]$INFO[ListItem.AddonVersion][/COLOR]</value>
-    <value condition="!String.IsEmpty(ListItem.AddonCreator) + !String.IsEmpty(ListItem.AddonVersion)">[COLOR unfocused_text]$INFO[ListItem.AddonCreator][/COLOR] [B]»[/B] [COLOR unfocused_text]$INFO[ListItem.AddonVersion][/COLOR]</value>
-    <value condition="!String.IsEmpty(ListItem.AddonOrigin)">[COLOR unfocused_text]$INFO[ListItem.AddonOrigin][/COLOR]</value>
-    <value condition="!String.IsEmpty(ListItem.AddonCreator)">[COLOR unfocused_text]$INFO[ListItem.AddonCreator][/COLOR]</value>
-    <value condition="!String.IsEmpty(ListItem.AddonVersion)">[COLOR unfocused_text]$INFO[ListItem.AddonVersion][/COLOR]</value>
+    <value condition="ListItem.Property(addon.downloading)">[COLOR bright_text][LIGHT]$INFO[ListItem.Property(addon.status)][/LIGHT][/COLOR]</value>
+    <value condition="!Container.SortMethod(1)">[COLOR bright_text][LIGHT]$INFO[ListItem.Label2][/LIGHT][/COLOR]</value>
+    <value condition="String.IsEqual(ListItem.Path,addons://all/) + !String.IsEmpty(ListItem.AddonOrigin) + !String.IsEmpty(ListItem.AddonVersion)">[COLOR bright_text][LIGHT]$INFO[ListItem.AddonOrigin][/LIGHT][/COLOR] » [COLOR bright_text][LIGHT]$INFO[ListItem.AddonVersion][/LIGHT][/COLOR]</value>
+    <value condition="!String.IsEmpty(ListItem.AddonCreator) + !String.IsEmpty(ListItem.AddonVersion)">[COLOR bright_text][LIGHT]$INFO[ListItem.AddonCreator][/LIGHT][/COLOR] » [COLOR bright_text][LIGHT]$INFO[ListItem.AddonVersion][/LIGHT][/COLOR]</value>
+    <value condition="!String.IsEmpty(ListItem.AddonOrigin)">[COLOR bright_text][LIGHT]$INFO[ListItem.AddonOrigin][/LIGHT][/COLOR]</value>
+    <value condition="!String.IsEmpty(ListItem.AddonCreator)">[COLOR bright_text][LIGHT]$INFO[ListItem.AddonCreator][/LIGHT][/COLOR]</value>
+    <value condition="!String.IsEmpty(ListItem.AddonVersion)">[COLOR bright_text][LIGHT]$INFO[ListItem.AddonVersion][/LIGHT][/COLOR]</value>
     <value></value>
 	</variable>
 	<variable name="AddonsLabel3Var">
@@ -313,6 +305,31 @@
 		<value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170])">icons/addonstatus/enabled-deprecated.png</value>
 		<value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])">icons/addonstatus/enabled-broken.png</value>
 		<value condition="!ListItem.IsParentFolder">OverlayUnwatched.png</value>
+	</variable>
+	<variable name="AddonTilesSublabelVar">
+		<value condition="$EXP[addonTilesStatusLine]">$INFO[ListItem.Property(Addon.Status)]</value>
+		<value condition="$EXP[addonTilesDatePath] + !String.IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
+		<value condition="$EXP[addonTilesDatePath]">$INFO[ListItem.AddonLastUpdated]</value>
+		<value condition="$EXP[addonTilesUpdateLine]">$INFO[ListItem.AddonVersion] → $INFO[ListItem.Property(Addon.ValidUpdateVersion)]</value>
+		<value condition="$EXP[addonTilesVersionPath]">$INFO[ListItem.AddonVersion]</value>
+		<value>$INFO[ListItem.AddonSummary]</value>
+	</variable>
+	<variable name="AddonUpdateCountVar">
+		<value condition="Integer.IsEqual(System.AddonUpdateCount,0)">$LOCALIZE[21341]</value>
+		<value>$LOCALIZE[24043] ($INFO[System.AddonUpdateCount])</value>
+	</variable>
+	<variable name="AddonTilesCrumbVar">
+		<value>[COLOR unfocused_text]root[/COLOR] /$INFO[Window(AddonBrowser).Property(crumb1), [COLOR unfocused_text],[/COLOR]]$INFO[Window(AddonBrowser).Property(crumb2), / [COLOR unfocused_text],[/COLOR]]$INFO[Window(AddonBrowser).Property(crumb3), / [COLOR unfocused_text],[/COLOR]]</value>
+	</variable>
+	<variable name="AddonTilesStatusIconVar">
+		<value condition="[String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170]) | String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])] + !ListItem.Property(addon.isenabled)">icons/addonstatus/disable.png</value>
+		<value condition="ListItem.Property(addon.orphaned)">icons/addonstatus/orphan.png</value>
+		<value condition="ListItem.Property(addon.downloading)">icons/addonstatus/install.png</value>
+		<value condition="ListItem.Property(addon.isinstalled) + !ListItem.Property(addon.isenabled)">icons/addonstatus/disable.png</value>
+		<value condition="ListItem.Property(addon.hasupdate) | ListItem.Property(addon.isupdate)">icons/addonstatus/update.png</value>
+		<value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24169])">icons/addonstatus/enabled-normal.png</value>
+		<value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24170])">icons/addonstatus/enabled-deprecated.png</value>
+		<value condition="ListItem.Property(addon.isenabled) + String.IsEqual(ListItem.AddonLifecycleType,$LOCALIZE[24171])">icons/addonstatus/enabled-broken.png</value>
 	</variable>
 	<variable name="AddonsOriginVar">
 		<value condition="ListItem.Property(Addon.IsFromOfficialRepo) + ListItem.IsAutoUpdateable">icons/addonstatus/official.png</value>
@@ -612,6 +629,10 @@
 		<value condition="!String.IsEmpty(Window.Property(IsRadio))">$LOCALIZE[19199] - $LOCALIZE[19024]</value>
 		<value>$LOCALIZE[19199] - $LOCALIZE[19023]</value>
 	</variable>
+	<variable name="PVRChannelNameColor">
+		<value condition="ListItem.Property(ParentalLocked)">red</value>
+		<value>unfocused_text</value>
+	</variable>
 	<variable name="RDSInfoSubTitle">
 		<value condition="String.IsEmpty(MusicPlayer.ChannelName)">$INFO[Player.Title]</value>
 		<value>$INFO[MusicPlayer.ChannelName]$INFO[Player.Title, - ]</value>
@@ -693,10 +714,6 @@
 	<variable name="SeasonEpisodeAndNameLabel">
     <value>$VAR[SeasonEpisodeLabel]$VAR[EpisodeNameLabel]</value>
 	</variable>
-	<variable name="PVRIconDiffuse">
-    <value condition="ListItem.IsFolder">$VAR[FocusedTextColorVar]</value>
-    <value></value>
-	</variable>
 	<variable name="VideoPlayerSeasonEpisodeAndNameLabel">
 		<value condition="!String.IsEmpty(VideoPlayer.Season)">[COLOR button_focus][CAPITALIZE]$LOCALIZE[36906]:[/CAPITALIZE][/COLOR] $INFO[VideoPlayer.Season,S]$INFO[VideoPlayer.Episode,E]$INFO[VideoPlayer.EpisodePart,/]$INFO[VideoPlayer.EpisodeName, - ]</value>
 		<value condition="!String.IsEmpty(VideoPlayer.Episode)">[COLOR button_focus][CAPITALIZE]$LOCALIZE[36906]:[/CAPITALIZE][/COLOR] $INFO[VideoPlayer.Episode]$INFO[VideoPlayer.EpisodePart,/]$INFO[VideoPlayer.EpisodeName, - ]</value>
@@ -743,6 +760,18 @@
 	<variable name="AddonNewsVar">
 		<value condition="!String.IsEmpty(ListItem.AddonNews)">$LOCALIZE[31136]</value>
 	</variable>
+	<variable name="PVRDurationVar">
+		<value condition="Integer.IsGreater(ListItem.Duration(h),0) + Integer.IsGreater(ListItem.Duration(m),0)">$INFO[ListItem.Duration(h),,h ]$INFO[ListItem.Duration(m),,m]</value>
+		<value condition="Integer.IsGreater(ListItem.Duration(h),0)">$INFO[ListItem.Duration(h),,h]</value>
+		<value>$INFO[ListItem.Duration(m),,m]</value>
+	</variable>
+	<variable name="PVRTimeRangeVar">
+		<value>$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ]</value>
+	</variable>
+	<variable name="PVRMetaEndsAtVar">
+		<value condition="!String.IsEmpty(ListItem.Duration)">$VAR[PVRDurationVar] • $LOCALIZE[31080] $INFO[ListItem.EndTime]</value>
+		<value>$LOCALIZE[31080] $INFO[ListItem.EndTime]</value>
+	</variable>
 	<variable name="WidgetUnfocusedPVRNextProgrammeLabel">
 		<value condition="!String.IsEmpty(ListItem.NextStartTime) + !String.IsEmpty(ListItem.NextTitle)">[COLOR grey]$LOCALIZE[209]:[/COLOR] $INFO[ListItem.NextTitle]</value>
 		<value condition="!String.IsEmpty(ListItem.NextTitle)">[COLOR grey]$LOCALIZE[209]:[/COLOR] $INFO[ListItem.NextTitle]</value>
@@ -760,16 +789,129 @@
 		<value condition="!String.IsEmpty(ListItem.NextTitle)">$LOCALIZE[209]: $INFO[ListItem.NextTitle]</value>
 	</variable>
 	<variable name="PVRListItemSubLabel">
-		<value condition="ListItem.IsFolder">[COLOR grey]$INFO[ListItem.Timertype][/COLOR]</value>
-		<value condition="$EXP[listitem_has_episode_info] + !String.IsEmpty(ListItem.EpgEventTitle) + !String.StartsWith(ListItem.EpisodeName,ListItem.EpgEventTitle)">$INFO[ListItem.EpgEventTitle] | [COLOR grey]$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName][/COLOR]</value>
-		<value condition="$EXP[listitem_has_episode_info]">[COLOR grey]$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName][/COLOR]</value>
-		<value>$INFO[ListItem.EpgEventTitle]</value>
+		<value condition="ListItem.IsFolder">[LIGHT][COLOR grey]$INFO[ListItem.Timertype][/COLOR][/LIGHT]</value>
+		<value condition="$EXP[listitem_has_episode_info] + !String.IsEmpty(ListItem.EpgEventTitle) + !String.StartsWith(ListItem.EpisodeName,ListItem.EpgEventTitle)">[LIGHT]$INFO[ListItem.EpgEventTitle] | [COLOR grey]$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName][/COLOR][/LIGHT]</value>
+		<value condition="$EXP[listitem_has_episode_info]">[LIGHT][COLOR grey]$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName][/COLOR][/LIGHT]</value>
+		<value>[LIGHT]$INFO[ListItem.EpgEventTitle][/LIGHT]</value>
 	</variable>
 	<variable name="PVRListItemSubLabelFocused">
+		<value condition="ListItem.IsFolder">[LIGHT]$INFO[ListItem.Timertype][/LIGHT]</value>
+		<value condition="$EXP[listitem_has_episode_info] + !String.IsEmpty(ListItem.EpgEventTitle) + !String.StartsWith(ListItem.EpisodeName,ListItem.EpgEventTitle)">[LIGHT]$INFO[ListItem.EpgEventTitle] | $VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName][/LIGHT]</value>
+		<value condition="$EXP[listitem_has_episode_info]">[LIGHT]$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName][/LIGHT]</value>
+		<value>[LIGHT]$INFO[ListItem.EpgEventTitle][/LIGHT]</value>
+	</variable>
+	<variable name="PVRGuideTitleVar">
 		<value condition="ListItem.IsFolder">$INFO[ListItem.Timertype]</value>
 		<value condition="$EXP[listitem_has_episode_info] + !String.IsEmpty(ListItem.EpgEventTitle) + !String.StartsWith(ListItem.EpisodeName,ListItem.EpgEventTitle)">$INFO[ListItem.EpgEventTitle] | $VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName]</value>
 		<value condition="$EXP[listitem_has_episode_info]">$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName]</value>
 		<value>$INFO[ListItem.EpgEventTitle]</value>
+	</variable>
+	<variable name="PVRProgressWheelColorVar">
+		<value condition="ListItem.IsRecording">red</value>
+		<value>dim_text</value>
+	</variable>
+	<variable name="PVRProgressWheelVar">
+		<value condition="Integer.IsGreater(ListItem.Progress,99)">progress/unwatched/100.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,98)">progress/unwatched/99.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,97)">progress/unwatched/98.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,96)">progress/unwatched/97.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,95)">progress/unwatched/96.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,94)">progress/unwatched/95.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,93)">progress/unwatched/94.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,92)">progress/unwatched/93.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,91)">progress/unwatched/92.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,90)">progress/unwatched/91.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,89)">progress/unwatched/90.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,88)">progress/unwatched/89.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,87)">progress/unwatched/88.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,86)">progress/unwatched/87.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,85)">progress/unwatched/86.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,84)">progress/unwatched/85.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,83)">progress/unwatched/84.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,82)">progress/unwatched/83.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,81)">progress/unwatched/82.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,80)">progress/unwatched/81.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,79)">progress/unwatched/80.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,78)">progress/unwatched/79.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,77)">progress/unwatched/78.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,76)">progress/unwatched/77.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,75)">progress/unwatched/76.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,74)">progress/unwatched/75.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,73)">progress/unwatched/74.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,72)">progress/unwatched/73.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,71)">progress/unwatched/72.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,70)">progress/unwatched/71.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,69)">progress/unwatched/70.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,68)">progress/unwatched/69.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,67)">progress/unwatched/68.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,66)">progress/unwatched/67.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,65)">progress/unwatched/66.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,64)">progress/unwatched/65.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,63)">progress/unwatched/64.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,62)">progress/unwatched/63.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,61)">progress/unwatched/62.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,60)">progress/unwatched/61.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,59)">progress/unwatched/60.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,58)">progress/unwatched/59.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,57)">progress/unwatched/58.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,56)">progress/unwatched/57.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,55)">progress/unwatched/56.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,54)">progress/unwatched/55.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,53)">progress/unwatched/54.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,52)">progress/unwatched/53.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,51)">progress/unwatched/52.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,50)">progress/unwatched/51.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,49)">progress/unwatched/50.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,48)">progress/unwatched/49.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,47)">progress/unwatched/48.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,46)">progress/unwatched/47.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,45)">progress/unwatched/46.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,44)">progress/unwatched/45.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,43)">progress/unwatched/44.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,42)">progress/unwatched/43.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,41)">progress/unwatched/42.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,40)">progress/unwatched/41.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,39)">progress/unwatched/40.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,38)">progress/unwatched/39.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,37)">progress/unwatched/38.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,36)">progress/unwatched/37.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,35)">progress/unwatched/36.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,34)">progress/unwatched/35.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,33)">progress/unwatched/34.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,32)">progress/unwatched/33.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,31)">progress/unwatched/32.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,30)">progress/unwatched/31.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,29)">progress/unwatched/30.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,28)">progress/unwatched/29.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,27)">progress/unwatched/28.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,26)">progress/unwatched/27.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,25)">progress/unwatched/26.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,24)">progress/unwatched/25.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,23)">progress/unwatched/24.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,22)">progress/unwatched/23.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,21)">progress/unwatched/22.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,20)">progress/unwatched/21.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,19)">progress/unwatched/20.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,18)">progress/unwatched/19.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,17)">progress/unwatched/18.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,16)">progress/unwatched/17.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,15)">progress/unwatched/16.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,14)">progress/unwatched/15.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,13)">progress/unwatched/14.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,12)">progress/unwatched/13.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,11)">progress/unwatched/12.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,10)">progress/unwatched/11.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,9)">progress/unwatched/10.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,8)">progress/unwatched/9.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,7)">progress/unwatched/8.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,6)">progress/unwatched/7.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,5)">progress/unwatched/6.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,4)">progress/unwatched/5.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,3)">progress/unwatched/4.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,2)">progress/unwatched/3.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,1)">progress/unwatched/2.png</value>
+		<value condition="Integer.IsGreater(ListItem.Progress,0)">progress/unwatched/1.png</value>
+		<value></value>
 	</variable>
 	<variable name="PVRInfoPanelDateDurationLabel">
 		<value condition="!String.IsEmpty(ListItem.StartDate) + !String.IsEmpty(ListItem.StartTime)">$INFO[ListItem.StartDate,[COLOR grey]$LOCALIZE[552]:[/COLOR] ,[CR]]$INFO[ListItem.StartTime,[COLOR grey]$LOCALIZE[555]:[/COLOR] ,[CR]]$INFO[ListItem.Duration,[COLOR grey]$LOCALIZE[180]:[/COLOR] ]</value>

@@ -3,13 +3,13 @@
 	<defaultcontrol>9000</defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
 	<controls>
-		<include>ZeroFadeBackground</include>
+		<include>SimpleBackground</include>
 		<control type="group">
 			<centerleft>50%</centerleft>
 			<width>1600</width>
 			<top>0</top>
 			<bottom>0</bottom>
-			<include>OpenClose_Right</include>
+			<include>OpenClose_FadeZoom</include>
 			<!-- <control type="label">
 				<left>0</left>
 				<right>0</right>
@@ -62,8 +62,7 @@
 					</item>
 					<item>
 						<label>$LOCALIZE[24001]</label>
-						<onclick>ActivateWindow(1100)</onclick>
-						<!-- <onclick>ActivateWindow(addonbrowser)</onclick> -->
+						<onclick>ActivateWindow(addonbrowser)</onclick>
 						<icon>icons/settings/addons.png</icon>
 					</item>
 					<item>

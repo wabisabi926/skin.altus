@@ -5,7 +5,7 @@
 	<menucontrol>9000</menucontrol>
 	<views>56,503</views>
 	<controls>
-		<include>ZeroFadeBackground</include>
+		<include>SimpleBackground</include>
 		<!-- <include>DefaultBackground</include> -->
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
@@ -13,8 +13,8 @@
 			<include condition="Window.IsActive(musicplaylist)">View_503_NowPlaying</include>
 			<include>CommonScrollbars</include>
 			<control type="group">
-				<include>OpenClose_Left</include>
-				<include>Visible_Left</include>
+				<include>OpenClose_FadeZoom</include>
+				<include>Vis_FadeZoom</include>
 				<include>ListThumbInfoPanel</include>
 			</control>
 			<include content="TopBar" condition="Window.IsActive(videoplaylist)">
@@ -40,14 +40,9 @@
 			<include>MediaMenuMouseOverlay</include>
 			<control type="group">
 				<include>MediaMenuCommon</include>
+				<include>MediaMenuSectionHeader</include>
 				<control type="grouplist" id="9000">
-					<top>50</top>
 					<include>MediaMenuListCommon</include>
-					<control type="label" id="203">
-						<description>Actions</description>
-						<include>MediaMenuLabelCommon</include>
-						<label>$LOCALIZE[31020]</label>
-					</control>
 					<control type="radiobutton" id="20">
 						<height>80</height>
 						<align>left</align>
